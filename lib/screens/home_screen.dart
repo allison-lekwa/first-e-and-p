@@ -12,20 +12,27 @@ class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController = PageController(
     initialPage: 0,
   );
-  List<Widget> _screen = [MyHomePage(), MyCalcPage(), MyDashBoardPage()];
+  List<Widget> _screen = [MyHomePage(), MyCalcPage(), MyDashBoardPage('0', '0')];
   int _currentIndex = 0;
+  bool _showAppbar = false;
 
-  void _onPageChanged(int index,) {
+  void _onPageChanged(
+    int index,
+  ) {
+    
     setState(() {
-          _currentIndex = index;
-        });
+      _currentIndex = index;
+      if (index == 2) {
+      _showAppbar = true;
+    }else{
+      _showAppbar = false;
+    }
+    });
   }
 
   void _onItemTapped(int selectedIndex) {
     _pageController.jumpToPage(selectedIndex);
   }
-
-  
 
   @override
   void dispose() {
@@ -36,6 +43,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _showAppbar
+          ? AppBar(
+              automaticallyImplyLeading: true,
+              title: Text('First E&P'),
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      _pageController.animateToPage(1,
+                          duration: Duration(milliseconds: 250),
+                          curve: Curves.bounceInOut);
+                    })
+              ],
+            )
+          : PreferredSize(
+              child: Container(),
+              preferredSize: Size(0.0, 0.0),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey[500],
@@ -45,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-            
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calculate_rounded),
@@ -54,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
             label: 'Dashboard',
-            
           ),
         ],
       ),

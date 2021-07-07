@@ -45,17 +45,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 SizedBox(height: size.height*0.3),
                 Container(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Container(
-                      width: size.width,
-                      height: size.height*0.5,
-                      decoration: new BoxDecoration(
-                        
-                        image: new DecorationImage(
-                          image: new ExactAssetImage('assets/images/e_and_p_logo.png', scale: 0.01),
-                          fit: BoxFit.cover,
-                        ),
-                        
+                      margin: EdgeInsets.all(5),
+                      child: Column(
+                        children: <Widget>[
+                          getImage('assets/images/e_and_p_logo.png'),
+                        ],
                       ),
                     ),
                   )
@@ -68,4 +64,17 @@ class _MyHomePageState extends State<MyHomePage> {
       
     );
   }
+}
+
+Widget getImage(imageName) {
+  AssetImage assetImage = AssetImage(imageName);
+  Image image = Image(
+    image: assetImage,
+    width: 300,
+    height: 250,
+  );
+  return Container(
+    child: image,
+    margin: EdgeInsets.all(40),
+  );
 }
